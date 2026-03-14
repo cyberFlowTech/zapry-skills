@@ -5,7 +5,8 @@
 ```json
 POST /{AUTH_TOKEN}/createPost
 {
-  "content": "Today we shipped a new feature."
+  "content": "Today we shipped a new feature.",
+  "images": ["/tmp/release-cover.png"]
 }
 ```
 
@@ -19,6 +20,12 @@ Response:
   }
 }
 ```
+
+### If user asks for image post
+
+- Do **not** send text-only `createPost`.
+- `images` must be present and non-empty.
+- Each image source must be local path, `data:` URI, or `/_temp/media` URL.
 
 ## Example 2: Engage with a post
 

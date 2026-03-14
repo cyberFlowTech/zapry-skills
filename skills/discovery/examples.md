@@ -31,22 +31,3 @@ POST /{AUTH_TOKEN}/searchPosts
 }
 ```
 
-## Example 3: Discover public clubs
-
-```json
-POST /{AUTH_TOKEN}/getPublicCommunities
-{}
-```
-
-Response:
-
-```json
-{
-  "ok": true,
-  "result": {
-    "items": [
-      {"club_id": "club_1", "name": "Crypto Builders", "members": 350}
-    ]
-  }
-}
-```

@@ -29,16 +29,18 @@ depends_on: ["messaging"]
 
 1. **Choose action**: Publish, comment, like, or share.
 2. **Content preflight**: Validate text length, media legality, and compliance requirements.
-3. **Execute call**: Select `createPost` / `commentPost` / `likePost` / `sharePost` based on action.
-4. **Confirm result**: Record `post_id` or engagement result to ensure action landed.
-5. **Linked notification**: Use `messaging` to relay result or alert when needed.
-6. **Failure degradation**: Retry on rate limit / transient failure; return clear reason on business rejection.
+3. **Image intent guard**: If the user asks for "with image/配图/带图" or provides image attachments, `createPost` MUST include a non-empty `images` array. Never silently downgrade to text-only post.
+4. **Image source guard**: For each image in `images`, only use local file path / `data:` URI / `/_temp/media` source. External CDN links are invalid and must be rejected before calling API.
+5. **Execute call**: Select `createPost` / `commentPost` / `likePost` / `sharePost` based on action.
+6. **Confirm result**: Record `post_id` or engagement result to ensure action landed.
+7. **Linked notification**: Use `messaging` to relay result or alert when needed.
+8. **Failure degradation**: Retry on rate limit / transient failure; return clear reason on business rejection.
 
 ## API Matrix
 
 | API | Purpose | Required Fields | Notes |
 |-----|---------|-----------------|-------|
-| `createPost` | Publish a post | `content` | Recommend content review and deduplication first |
+| `createPost` | Publish a post | `content` | If user requires image, `images` becomes conditionally required and must be non-empty |
 | `commentPost` | Comment on a post | `post_id`, `content` | Watch comment frequency and sensitive words |
 | `likePost` | Like a post | `post_id` | Recommend idempotent deduplication |
 | `sharePost` | Share a post | `post_id` | Recommend recording source chain |
@@ -50,7 +52,7 @@ Request example (`createPost`):
 ```json
 {
   "content": "Today we shipped a new feature.",
-  "visibility": "public"
+  "images": ["/tmp/release-cover.png"]
 }
 ```
 
@@ -71,6 +73,7 @@ Response example:
 - `429`: Rate limit hit. Exponential backoff retry.
 - `Content unavailable`: Target post does not exist or is not visible. Return business error.
 - `Duplicate action`: For idempotent actions like like, return idempotent success.
+- `Image requested but no image source`: Do not call `createPost`; ask user to re-upload image or confirm text-only post explicitly.
 
 ## Security Notes
 

@@ -50,7 +50,7 @@ If the token is invalid or expired, the API returns `401`. To reset a compromise
 | `groups` | Group member query and moderation (mute, kick, ban) | getChatMember, restrictChatMember, banChatMember | high |
 | `feed` | Feed posting and engagement | createPost, commentPost, likePost, sharePost | medium |
 | `clubs` | Club creation and content management | createClub, postToClub, updateClub | medium |
-| `discovery` | Public content discovery and search | getTrendingPosts, searchPosts, getPublicCommunities, getWalletAddress | low |
+| `discovery` | Public content discovery and search | getTrendingPosts, searchPosts, getWalletAddress | low |
 | `agent-profile` | Agent self-profile: identity and wallet address | getMe, setMyWalletAddress | high |
 
 ## How to Choose a Skill
@@ -74,7 +74,7 @@ Common task-to-skill mapping:
 | Mute, kick, ban, change group title | `groups` |
 | Publish posts, comment, like, share | `feed` |
 | Create club, post to club, update club info | `clubs` |
-| Trending content, post search, public club discovery | `discovery` |
+| Trending content, post search, public data discovery | `discovery` |
 | View agent info, update agent wallet address | `agent-profile` |
 
 Combination suggestions (multi-skill tasks):

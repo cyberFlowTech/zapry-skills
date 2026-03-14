@@ -4,10 +4,10 @@ description: Zapry public content discovery capability with read-only endpoints.
 version: 1.0.0
 owner: zapry-platform
 tags: ["zapry", "discovery", "search", "trending", "public-data"]
-triggers_intent: ["trending posts", "search content", "public clubs", "discover content", "trends", "public wallet address", "search posts", "public communities"]
-triggers_api: ["getTrendingPosts", "searchPosts", "getPublicCommunities", "getWalletAddress"]
+triggers_intent: ["trending posts", "search content", "discover content", "trends", "public wallet address", "search posts"]
+triggers_api: ["getTrendingPosts", "searchPosts", "getWalletAddress"]
 risk: low
-scope: ["public_trending", "public_search", "public_communities", "public_wallet_lookup"]
+scope: ["public_trending", "public_search", "public_wallet_lookup"]
 out_of_scope: ["message_send", "group_moderation", "feed_ops", "wallet_transfer"]
 depends_on: []
 ---
@@ -17,7 +17,7 @@ depends_on: []
 ## When to Use
 
 - Need to query publicly trending content
-- Need to search posts or get public club listings
+- Need to search posts
 - Need to look up public wallet address information
 
 ## When NOT to Use
@@ -27,9 +27,9 @@ depends_on: []
 
 ## Workflow
 
-1. **Identify query type**: Trending, keyword search, public clubs, or address lookup.
+1. **Identify query type**: Trending, keyword search, or address lookup.
 2. **Build query parameters**: Keywords, pagination, sort order, or target user identifier.
-3. **Execute read-only call**: `getTrendingPosts` / `searchPosts` / `getPublicCommunities` / `getWalletAddress`.
+3. **Execute read-only call**: `getTrendingPosts` / `searchPosts` / `getWalletAddress`.
 4. **Normalize results**: Unify field structure (title, link, source, timestamp).
 5. **Quality control**: Separate empty results from weak matches to avoid misleading output.
 
@@ -39,7 +39,6 @@ depends_on: []
 |-----|---------|-----------------|-------|
 | `getTrendingPosts` | Get trending posts | - | Good for trending dashboards |
 | `searchPosts` | Search posts | `query` | Supports keyword search |
-| `getPublicCommunities` | Get public clubs | - | Good for discovery entry points |
 | `getWalletAddress` | Look up public wallet address | `user_id` | Read public info only |
 
 ### Minimal Request/Response Pattern
