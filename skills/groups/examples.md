@@ -2,26 +2,26 @@
 
 ## Example 1: Mute spam user
 
-1. Check user status:
+1. Search the member in the group list:
 
 ```json
-POST /{AUTH_TOKEN}/getChatMember
+POST /{AUTH_TOKEN}/getChatMembers
 {
   "chat_id": "group_id",
-  "user_id": "spam_user_id"
+  "page": 1,
+  "page_size": 20,
+  "keyword": "spam_user"
 }
 ```
 
 2. Mute the user:
 
 ```json
-POST /{AUTH_TOKEN}/restrictChatMember
+POST /{AUTH_TOKEN}/muteChatMember
 {
   "chat_id": "group_id",
   "user_id": "spam_user_id",
-  "permissions": {
-    "can_send_messages": false
-  }
+  "mute": true
 }
 ```
 
