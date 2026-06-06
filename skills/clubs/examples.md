@@ -42,3 +42,27 @@ POST /{AUTH_TOKEN}/postToClub
   "content": "New feature released today!"
 }
 ```
+
+## Example 3: Leave a club as the current bot
+
+```json
+POST /{AUTH_TOKEN}/leaveClub
+{
+  "club_id": 123456
+}
+```
+
+Response:
+
+```json
+{
+  "ok": true,
+  "result": {
+    "club_id": 123456,
+    "user_id": "900000143",
+    "left": true
+  }
+}
+```
+
+`quitClub` is supported as a compatibility alias for the same operation.
